@@ -1,0 +1,153 @@
+import type {
+  GameData,
+  ItemDef,
+  ItemState,
+  PriceType,
+  Rounding,
+} from '../types'
+
+export interface IdentifyQuery {
+  price: number
+  priceType: PriceType
+  /** カテゴリID。未指定なら全カテゴリ */
+  category?: string
+  /** ダンジョンID。未指定なら全アイテム */
+  dungeonId?: string
+}
+
+export interface Match {
+  item: ItemDef
+  state: ItemState
+  /** 回数変動アイテムのときのみ: この回数なら一致する */
+  charges?: number
+}
+
+const STATE_ORDER: ItemState[] = ['normal', 'blessed', 'cursed']
+
+function applyRounding(value: number, rounding: Rounding): number {
+  switch (rounding) {
+    case 'floor':
+      return Math.floor(value)
+    case 'ceil':
+      return Math.ceil(value)
+    case 'round':
+      return Math.round(value)
+  }
+}
+
+/** 状態倍率適用後の価格。倍率は基本価格(回数込み)全体にかかる */
+export function priceOf(
+  game: GameData,
+  item: ItemDef,
+  priceType: PriceType,
+  state: ItemState,
+  charges?: number,
+): number {
+  const base = priceType === 'buy' ? item.buy : item.sell
+  const perCharge =
+    (priceType === 'buy' ? item.buyPerCharge : item.sellPerCharge) ?? 0
+  const raw = base + perCharge * (charges ?? 0)
+  if (state === 'normal') return raw
+  const mod =
+    state === 'blessed'
+      ? game.priceModifiers.blessed
+      : game.priceModifiers.cursed
+  return applyRounding(raw * mod, game.rounding)
+}
+
+function chargeRange(item: ItemDef): number[] {
+  if (item.buyPerCharge == null && item.sellPerCharge == null) return [NaN]
+  const min = item.chargeMin ?? 0
+  const max = item.chargeMax ?? min
+  const list: number[] = []
+  for (let n = min; n <= max; n++) list.push(n)
+  return list
+}
+
+export function itemsInScope(
+  game: GameData,
+  opts: { category?: string; dungeonId?: string },
+): ItemDef[] {
+  let items = game.items
+  if (opts.category) items = items.filter((i) => i.category === opts.category)
+  if (opts.dungeonId) {
+    const dungeon = game.dungeons.find((d) => d.id === opts.dungeonId)
+    if (dungeon) {
+      const pool = new Set(dungeon.itemPool)
+      items = items.filter((i) => pool.has(i.name))
+    }
+  }
+  return items
+}
+
+/** 値段からの候補検索。カテゴリ・ダンジョンで絞り込み、祝福/呪い・回数変動も照合する */
+export function identify(game: GameData, query: IdentifyQuery): Match[] {
+  const matches: Match[] = []
+  if (!Number.isFinite(query.price) || query.price <= 0) return matches
+  for (const item of itemsInScope(game, query)) {
+    for (const charges of chargeRange(item)) {
+      const c = Number.isNaN(charges) ? undefined : charges
+      for (const state of STATE_ORDER) {
+        if (priceOf(game, item, query.priceType, state, c) === query.price) {
+          matches.push({ item, state, charges: c })
+        }
+      }
+    }
+  }
+  // 通常状態を先に、同一アイテムの回数違いは昇順に
+  matches.sort(
+    (a, b) =>
+      STATE_ORDER.indexOf(a.state) - STATE_ORDER.indexOf(b.state) ||
+      a.item.name.localeCompare(b.item.name, 'ja') ||
+      (a.charges ?? 0) - (b.charges ?? 0),
+  )
+  return matches
+}
+
+export interface PriceGroup {
+  price: number
+  /** この価格(通常状態)に該当するアイテム数(回数違いは1アイテムとして数える) */
+  count: number
+  /** この価格に該当するアイテム名 */
+  items: string[]
+}
+
+/**
+ * 頻出価格チップ用: スコープ内アイテムの通常状態の実在価格を集計する。
+ * 回数変動アイテムは範囲内の全価格を数えるが、同一アイテムは価格ごとに1回のみ。
+ */
+export function collectPriceGroups(
+  game: GameData,
+  opts: { priceType: PriceType; category?: string; dungeonId?: string },
+): PriceGroup[] {
+  const byPrice = new Map<number, string[]>()
+  for (const item of itemsInScope(game, opts)) {
+    const prices = new Set<number>()
+    for (const charges of chargeRange(item)) {
+      const c = Number.isNaN(charges) ? undefined : charges
+      prices.add(priceOf(game, item, opts.priceType, 'normal', c))
+    }
+    for (const p of prices) {
+      const list = byPrice.get(p) ?? []
+      list.push(item.name)
+      byPrice.set(p, list)
+    }
+  }
+  return [...byPrice.entries()]
+    .map(([price, items]) => ({ price, count: items.length, items }))
+    .sort((a, b) => a.price - b.price)
+}
+
+/** 候補0件時のヒント: 入力価格に近い実在価格を返す */
+export function nearestPrices(
+  game: GameData,
+  opts: { price: number; priceType: PriceType; category?: string; dungeonId?: string },
+  limit = 3,
+): number[] {
+  const groups = collectPriceGroups(game, opts)
+  return groups
+    .map((g) => g.price)
+    .sort((a, b) => Math.abs(a - opts.price) - Math.abs(b - opts.price) || a - b)
+    .slice(0, limit)
+    .sort((a, b) => a - b)
+}

@@ -1,0 +1,19 @@
+{
+  "id": "shiren5",
+  "name": "風来のシレン5plus フォーチュンタワーと運命のダイス",
+  "shortName": "シレン5",
+  "priceModifiers": { "blessed": 1.2, "cursed": 0.87 },
+  "rounding": "floor",
+  "categories": [
+    { "id": "kusa", "name": "草", "hasCharges": false },
+    { "id": "scroll", "name": "巻物", "hasCharges": false },
+    { "id": "staff", "name": "杖", "hasCharges": true },
+    { "id": "bracelet", "name": "腕輪", "hasCharges": false },
+    { "id": "pot", "name": "壺", "hasCharges": false },
+    { "id": "fuda", "name": "札", "hasCharges": false }
+  ],
+  "items": [
+    { "name": "薬草", "category": "kusa", "buy": 40, "sell": 16 }
+  ],
+  "dungeons": []
+}

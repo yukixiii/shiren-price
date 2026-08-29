@@ -1,0 +1,542 @@
+:root {
+  color-scheme: light dark;
+  --bg: #f4f1e8;
+  --surface: #ffffff;
+  --text: #26221a;
+  --text-sub: #6f6a5c;
+  --border: #d9d3c2;
+  --accent: #1a5c3a;
+  --accent-soft: #e2efe6;
+  --accent-text: #ffffff;
+  --danger: #b3402f;
+  --blessed: #b8860b;
+  --cursed: #6b4fa0;
+  --done: #9a958a;
+  font-family: 'Hiragino Sans', 'Yu Gothic UI', 'Meiryo', system-ui, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #17191c;
+    --surface: #212428;
+    --text: #e8e5dd;
+    --text-sub: #9a978d;
+    --border: #3a3e44;
+    --accent: #4caf7d;
+    --accent-soft: #24352c;
+    --accent-text: #10160f;
+    --danger: #e07a63;
+    --blessed: #e0b94f;
+    --cursed: #a98fd6;
+    --done: #6b6e73;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+
+button {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.app {
+  max-width: 720px;
+  margin: 0 auto;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- header ---------- */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px 6px;
+  flex-wrap: wrap;
+}
+
+.app-header h1 {
+  font-size: 1.15rem;
+  margin: 0;
+  color: var(--accent);
+}
+
+.game-tabs {
+  display: flex;
+  gap: 6px;
+}
+
+.game-tab {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-weight: 600;
+}
+
+.game-tab.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-text);
+}
+
+/* ---------- main tabs ---------- */
+.main-tabs {
+  display: flex;
+  border-bottom: 2px solid var(--border);
+  padding: 0 14px;
+  gap: 4px;
+}
+
+.main-tabs button {
+  flex: 1;
+  max-width: 160px;
+  border: none;
+  background: none;
+  padding: 10px 4px;
+  font-weight: 600;
+  color: var(--text-sub);
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+}
+
+.main-tabs button.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
+/* ---------- main ---------- */
+.app-main {
+  flex: 1;
+  padding: 12px 14px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.field-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.field-label {
+  font-weight: 600;
+  color: var(--text-sub);
+  font-size: 0.9rem;
+}
+
+.dungeon-select {
+  flex: 1;
+  min-width: 200px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.dungeon-note,
+.scope-note {
+  font-size: 0.82rem;
+  color: var(--text-sub);
+  margin: 0;
+}
+
+/* ---------- price input ---------- */
+.price-input-row {
+  display: flex;
+  gap: 10px;
+  align-items: stretch;
+}
+
+.segmented {
+  display: flex;
+  border: 1px solid var(--accent);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.segmented button {
+  border: none;
+  background: var(--surface);
+  padding: 0 16px;
+  font-weight: 600;
+  min-height: 48px;
+}
+
+.segmented button.active {
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+.price-box {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0 10px;
+}
+
+.price-box:focus-within {
+  border-color: var(--accent);
+}
+
+.price-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: none;
+  color: var(--text);
+  font-size: 1.5rem;
+  font-weight: 700;
+  padding: 8px 4px;
+  text-align: right;
+}
+
+.price-unit {
+  font-weight: 700;
+  color: var(--text-sub);
+}
+
+.clear-btn {
+  border: none;
+  background: var(--border);
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  margin-left: 8px;
+  line-height: 1;
+  color: var(--text);
+}
+
+/* ---------- chips ---------- */
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 999px;
+  padding: 7px 12px;
+  min-height: 36px;
+}
+
+.chip.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-text);
+}
+
+.chip.done {
+  color: var(--done);
+  text-decoration: line-through;
+}
+
+.chip.done.active {
+  color: var(--accent-text);
+}
+
+.chip-count {
+  font-size: 0.75rem;
+  color: var(--text-sub);
+  margin-left: 3px;
+}
+
+.chip.active .chip-count {
+  color: var(--accent-text);
+}
+
+.price-chips {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px;
+  max-height: 40vh;
+  overflow-y: auto;
+}
+
+.price-chip-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.price-chip-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-sub);
+}
+
+.price-chip {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- results ---------- */
+.result-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.result-header h2 {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.toggle-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: var(--text-sub);
+}
+
+.result-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.result-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  flex-wrap: wrap;
+}
+
+.result-row input[type='checkbox'] {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--accent);
+}
+
+.result-row.identified .result-name {
+  color: var(--done);
+  text-decoration: line-through;
+}
+
+.result-name {
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.charge-badge {
+  margin-left: 4px;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.state-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: 6px;
+  padding: 2px 6px;
+  color: #fff;
+}
+
+.state-badge.blessed {
+  background: var(--blessed);
+}
+
+.state-badge.cursed {
+  background: var(--cursed);
+}
+
+.result-cat {
+  font-size: 0.78rem;
+  color: var(--text-sub);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1px 6px;
+}
+
+.result-prices {
+  margin-left: auto;
+  font-size: 0.85rem;
+  color: var(--text-sub);
+  font-variant-numeric: tabular-nums;
+}
+
+.per-charge {
+  font-size: 0.78rem;
+}
+
+.no-result p {
+  margin: 4px 0;
+}
+
+.hint {
+  color: var(--text-sub);
+  font-size: 0.9rem;
+}
+
+.hint .chip {
+  margin: 0 2px;
+}
+
+/* ---------- price table ---------- */
+.price-tables {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.price-table-section h3 {
+  margin: 0 0 6px;
+  font-size: 0.95rem;
+  color: var(--accent);
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+.price-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  font-size: 0.92rem;
+}
+
+.price-table th,
+.price-table td {
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+}
+
+.price-table thead th {
+  background: var(--accent-soft);
+  font-size: 0.8rem;
+}
+
+.price-table .num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.price-table .col-check {
+  width: 34px;
+  text-align: center;
+}
+
+.price-table input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+}
+
+.price-table tr.identified td {
+  color: var(--done);
+}
+
+.price-table tr.identified td:nth-child(2) {
+  text-decoration: line-through;
+}
+
+/* ---------- identified panel ---------- */
+.identified-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.identified-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.identified-panel h3 {
+  margin: 0 0 6px;
+  font-size: 0.95rem;
+  color: var(--accent);
+}
+
+.danger-btn {
+  border: 1px solid var(--danger);
+  color: var(--danger);
+  background: none;
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-weight: 600;
+}
+
+/* ---------- footer ---------- */
+.app-footer {
+  padding: 10px 14px 20px;
+  color: var(--text-sub);
+  font-size: 0.78rem;
+  text-align: center;
+}
+
+.app-footer p {
+  margin: 0;
+}
+
+/* ---------- PC layout ---------- */
+@media (min-width: 900px) {
+  .app {
+    max-width: 1080px;
+  }
+
+  .app-main {
+    display: grid;
+    grid-template-columns: 5fr 4fr;
+    gap: 14px 20px;
+    align-items: start;
+  }
+
+  .app-main > * {
+    grid-column: 1 / -1;
+  }
+
+  .app-main > .price-chips {
+    grid-column: 1;
+    grid-row: span 3;
+    max-height: 60vh;
+  }
+
+  .app-main > .result-header,
+  .app-main > .result-list,
+  .app-main > .no-result,
+  .app-main > .hint {
+    grid-column: 2;
+  }
+}
