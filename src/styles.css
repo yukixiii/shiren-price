@@ -172,6 +172,7 @@ button {
   border: 1px solid var(--accent);
   border-radius: 10px;
   overflow: hidden;
+  flex-shrink: 0; /* 幅が狭くても買値/売値ボタンは潰さない */
 }
 
 .segmented button {
@@ -189,6 +190,7 @@ button {
 
 .price-box {
   flex: 1;
+  min-width: 0; /* input の固有幅より小さく縮められるようにする */
   display: flex;
   align-items: center;
   background: var(--surface);
