@@ -525,6 +525,8 @@ button {
     grid-template-columns: 5fr 4fr;
     gap: 14px 20px;
     align-items: start;
+    /* main が flex:1 で余白を持っても、行は上に詰める(既定の stretch だと間延びする) */
+    align-content: start;
   }
 
   .app-main > * {
