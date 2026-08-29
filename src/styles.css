@@ -280,8 +280,10 @@ button {
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 10px;
-  max-height: 40vh;
+  /* スマホでページスクロールを吸われないよう、チップ約3行分に抑える */
+  max-height: 148px;
   overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .price-chip-section {
