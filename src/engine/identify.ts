@@ -46,8 +46,9 @@ export function priceOf(
   const base = priceType === 'buy' ? item.buy : item.sell
   const perCharge =
     (priceType === 'buy' ? item.buyPerCharge : item.sellPerCharge) ?? 0
+  // sellPerCharge は小数(買値の35%等)がありうるため、最終価格は常に端数処理する
   const raw = base + perCharge * (charges ?? 0)
-  if (state === 'normal') return raw
+  if (state === 'normal') return applyRounding(raw, game.rounding)
   const mod =
     state === 'blessed'
       ? game.priceModifiers.blessed
