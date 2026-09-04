@@ -62,7 +62,7 @@
 
 body {
   margin: 0;
-  background: var(--surface);
+  background: var(--bg);
   color: var(--text);
   font-size: 15px;
   line-height: 1.5;
