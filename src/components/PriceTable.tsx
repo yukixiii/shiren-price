@@ -1,4 +1,4 @@
-import { itemsInScope } from '../engine/identify'
+import { chargeRangeOf, itemsInScope } from '../engine/identify'
 import type { GameData, ItemDef } from '../types'
 
 interface Props {
@@ -48,6 +48,8 @@ export function PriceTable({
         const uniformBuy = uniformPerCharge(items, 'buyPerCharge')
         const uniformSell = uniformPerCharge(items, 'sellPerCharge')
         const hoisted = uniformBuy != null && uniformSell != null
+        // 回数幅を持つアイテムがあれば「回数」列を出す(PC)/ 名前の下に添える(スマホ)
+        const hasCharges = items.some((i) => chargeRangeOf(i) != null)
         return (
           <section key={c.id} className="price-table-section">
             <div className="price-table-header">
@@ -64,6 +66,7 @@ export function PriceTable({
                   <tr>
                     <th className="col-check">済</th>
                     <th>アイテム</th>
+                    {hasCharges && <th className="num col-charges">回数</th>}
                     <th className="num">買値</th>
                     <th className="num">売値</th>
                   </tr>
@@ -71,6 +74,12 @@ export function PriceTable({
                 <tbody>
                   {items.map((item) => {
                     const done = identified.has(item.name)
+                    const range = chargeRangeOf(item)
+                    const rangeText =
+                      range &&
+                      (range[0] === range[1]
+                        ? String(range[0])
+                        : `${range[0]}〜${range[1]}`)
                     return (
                       <tr key={item.name} className={done ? 'identified' : ''}>
                         <td className="col-check">
@@ -81,7 +90,19 @@ export function PriceTable({
                             aria-label={`${item.name} を識別済みにする`}
                           />
                         </td>
-                        <td>{item.name}</td>
+                        <td className="col-name">
+                          {item.name}
+                          {rangeText && (
+                            <span className="charge-range-sub">
+                              {rangeText}回
+                            </span>
+                          )}
+                        </td>
+                        {hasCharges && (
+                          <td className="num col-charges">
+                            {rangeText ?? '-'}
+                          </td>
+                        )}
                         <td className="num">
                           {item.buy.toLocaleString()}
                           {!hoisted && item.buyPerCharge != null && (

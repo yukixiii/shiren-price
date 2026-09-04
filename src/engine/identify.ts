@@ -56,12 +56,18 @@ export function priceOf(
   return applyRounding(raw * mod, game.rounding)
 }
 
-function chargeRange(item: ItemDef): number[] {
-  if (item.buyPerCharge == null && item.sellPerCharge == null) return [NaN]
+/** 入手時にありうる回数の幅 [min, max]。回数で変動しないアイテムなら null */
+export function chargeRangeOf(item: ItemDef): [number, number] | null {
+  if (item.buyPerCharge == null && item.sellPerCharge == null) return null
   const min = item.chargeMin ?? 0
-  const max = item.chargeMax ?? min
+  return [min, item.chargeMax ?? min]
+}
+
+function chargeRange(item: ItemDef): number[] {
+  const range = chargeRangeOf(item)
+  if (range == null) return [NaN]
   const list: number[] = []
-  for (let n = min; n <= max; n++) list.push(n)
+  for (let n = range[0]; n <= range[1]; n++) list.push(n)
   return list
 }
 

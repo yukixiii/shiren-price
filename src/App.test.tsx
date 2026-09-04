@@ -71,6 +71,33 @@ describe('App (実データでの結合テスト)', () => {
     expect(screen.queryByText(/\+100\/回/)).toBeNull()
   })
 
+  it('値段表に回数幅が出る', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    await user.click(screen.getByRole('tab', { name: '値段表' }))
+    // かなしばりの杖: 回数 4〜6(PC は回数列、スマホは名前の下)
+    const row = screen.getByText('かなしばりの杖').closest('tr')!
+    expect(within(row).getByText('4〜6')).toBeTruthy()
+    expect(within(row).getByText('4〜6回')).toBeTruthy()
+    const cells = within(row).getAllByRole('cell')
+    expect(cells.at(-2)!.textContent).toBe('500')
+    expect(cells.at(-1)!.textContent).toBe('200')
+  })
+
+  it('識別結果の回数バッジに回数幅を添える', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    await user.type(screen.getByLabelText('値段'), '1000')
+    await user.click(screen.getByRole('button', { name: '杖' }))
+    const row = screen
+      .getByLabelText('かなしばりの杖 を識別済みにする')
+      .closest('label')!
+    expect(within(row).getByText('[5]')).toBeTruthy()
+    expect(within(row).getByText('4〜6回')).toBeTruthy()
+    // 回数 5 での価格: 買 500+100×5 / 売 200+40×5
+    expect(within(row).getByText(/買 1,000 \/ 売 400/)).toBeTruthy()
+  })
+
   it('回数単価がばらつくカテゴリでは各行に表示する', async () => {
     const user = userEvent.setup()
     render(<App />)

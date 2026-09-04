@@ -362,6 +362,16 @@ button {
   font-variant-numeric: tabular-nums;
 }
 
+/* 結果行: そのアイテムがとりうる回数の幅(バッジの回数が幅のどこに当たるかの目安) */
+.charge-range {
+  margin-left: 4px;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--text-sub);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
 .state-badge {
   font-size: 0.75rem;
   font-weight: 700;
@@ -482,6 +492,37 @@ button {
   text-align: center;
 }
 
+/* 名前列: 数値列が nowrap で必要幅を取ったあとの残り幅を全て受け持つ */
+.price-table .col-name {
+  width: 100%;
+  min-width: 6em;
+  overflow-wrap: anywhere;
+}
+
+/* 回数幅: スマホでは列を出さず、名前の下に小さく添える */
+.price-table .col-charges {
+  display: none;
+}
+
+.price-table .charge-range-sub {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--text-sub);
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 480px) {
+  .price-table th,
+  .price-table td {
+    padding: 6px 6px;
+  }
+
+  .price-table .col-check {
+    width: 28px;
+  }
+}
+
 .price-table input[type='checkbox'] {
   width: 18px;
   height: 18px;
@@ -555,10 +596,23 @@ button {
     grid-column: 1 / -1;
   }
 
-  /* PC 幅では横に余裕があるので回数単価は数値と同じ行に戻す */
+  /* PC 幅では横に余裕があるので回数単価は数値と同じ行に戻し、回数は専用列に出す */
   .price-table .per-charge {
     display: inline;
     margin-left: 4px;
+  }
+
+  /* PC では数値列に必要幅を渡し、名前列は残りを受け持つ */
+  .price-table .col-name {
+    width: auto;
+  }
+
+  .price-table .col-charges {
+    display: table-cell;
+  }
+
+  .price-table .charge-range-sub {
+    display: none;
   }
 
   .app-main > .price-chips {

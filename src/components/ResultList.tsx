@@ -1,4 +1,4 @@
-import type { Match } from '../engine/identify'
+import { chargeRangeOf, priceOf, type Match } from '../engine/identify'
 import type { GameData } from '../types'
 
 interface Props {
@@ -64,6 +64,7 @@ export function ResultList({
     <div className="result-list">
       {visible.map((m, i) => {
         const done = identified.has(m.item.name)
+        const range = chargeRangeOf(m.item)
         return (
           <label
             key={`${m.item.name}-${m.state}-${m.charges ?? ''}-${i}`}
@@ -80,6 +81,13 @@ export function ResultList({
               {m.charges != null && (
                 <span className="charge-badge">[{m.charges}]</span>
               )}
+              {range && (
+                <span className="charge-range">
+                  {range[0] === range[1]
+                    ? `${range[0]}回固定`
+                    : `${range[0]}〜${range[1]}回`}
+                </span>
+              )}
             </span>
             {m.state !== 'normal' && (
               <span className={`state-badge ${m.state}`}>
@@ -88,7 +96,8 @@ export function ResultList({
             )}
             <span className="result-cat">{catName(m.item.category)}</span>
             <span className="result-prices">
-              買 {m.item.buy.toLocaleString()} / 売 {m.item.sell.toLocaleString()}
+              買 {priceOf(game, m.item, 'buy', 'normal', m.charges).toLocaleString()}{' '}
+              / 売 {priceOf(game, m.item, 'sell', 'normal', m.charges).toLocaleString()}
               {m.item.buyPerCharge != null && (
                 <span className="per-charge"> +{m.item.buyPerCharge}/回</span>
               )}

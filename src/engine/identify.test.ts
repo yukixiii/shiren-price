@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import type { GameData } from '../types'
 import {
+  chargeRangeOf,
   collectPriceGroups,
   identify,
   nearestPrices,
@@ -49,6 +50,16 @@ describe('priceOf', () => {
   it('回数変動は base + n*perCharge', () => {
     expect(priceOf(game, game.items[3], 'buy', 'normal', 5)).toBe(1300)
     expect(priceOf(game, game.items[3], 'sell', 'normal', 3)).toBe(420)
+  })
+})
+
+describe('chargeRangeOf', () => {
+  it('回数変動しないアイテムは null', () => {
+    expect(chargeRangeOf(game.items[0])).toBeNull()
+  })
+
+  it('回数変動アイテムは chargeMin〜chargeMax を返す', () => {
+    expect(chargeRangeOf(game.items[3])).toEqual([3, 6])
   })
 })
 
