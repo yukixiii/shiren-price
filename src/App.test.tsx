@@ -33,6 +33,23 @@ describe('App (実データでの結合テスト)', () => {
     expect(screen.getByText('楽草')).toBeTruthy()
   })
 
+  it('シレン4・アスカのタブがあり、切り替えるとそのタイトルのデータになる', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    expect(screen.getAllByRole('tab', { name: /シレン6|シレン5|シレン4|アスカ/ })).toHaveLength(4)
+    await user.click(screen.getByRole('tab', { name: 'アスカ' }))
+    await user.type(screen.getByLabelText('値段'), '1120')
+    await user.click(screen.getByRole('button', { name: '杖' }))
+    // アスカでは買値1120Gの杖は回復の杖[4]のみ
+    expect(screen.getByText('回復の杖')).toBeTruthy()
+    await user.click(screen.getByRole('tab', { name: 'シレン4' }))
+    await user.clear(screen.getByLabelText('値段'))
+    await user.type(screen.getByLabelText('値段'), '720')
+    await user.click(screen.getByRole('button', { name: '壺' }))
+    // シレン4では買値720Gの壺は600G系[4](識別の壺など)
+    expect(screen.getByText('識別の壺')).toBeTruthy()
+  })
+
   it('ダンジョン絞り込みで候補が変わる', async () => {
     const user = userEvent.setup()
     render(<App />)

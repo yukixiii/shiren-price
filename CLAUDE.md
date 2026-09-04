@@ -14,7 +14,7 @@ npm test                          # vitest run (all tests)
 npx vitest run src/engine         # run one directory / file
 npx vitest run -t "ダンジョン"     # run tests matching a name
 npm run build                     # tsc -b && vite build -> dist/
-node scripts/validate-data.mjs src/data/shiren5.json src/data/shiren6.json   # schema/consistency check for game data
+node scripts/validate-data.mjs src/data/shiren5.json src/data/shiren6.json src/data/shiren4.json src/data/asuka.json   # schema/consistency check for game data
 ```
 
 There is no lint script; `tsc -b` (strict, `noUnusedLocals`/`noUnusedParameters`) is the type gate and runs as part of `build`. CI (`.github/workflows/deploy.yml`) runs `npm test` then `npm run build` on every push to `main` and deploys `dist/`.
@@ -32,4 +32,4 @@ Three layers, with a strict dependency direction: **data (JSON) → engine (pure
 
 ## Data edits
 
-Prices and dungeon pools come from wikis; provenance, verified facts, and known-unverified items are in `src/data/NOTES.md` (index) and `NOTES-shiren5.md` / `NOTES-shiren6.md`. When changing data, update the relevant NOTES file, run `scripts/validate-data.mjs`, and run the tests. Per-title price rules differ (e.g. Shiren 6 blessed ×2 / cursed ×0.87 floor, +100 buy per charge; Shiren 5 blessed ×1.1 / cursed ×0.8, 5% per charge) and are encoded entirely in the JSON, not in code.
+Prices and dungeon pools come from wikis; provenance, verified facts, and known-unverified items are in `src/data/NOTES.md` (index) and `NOTES-<gameId>.md`. When changing data, update the relevant NOTES file, run `scripts/validate-data.mjs`, and run the tests. Per-title price rules differ (e.g. Shiren 6 blessed ×2 / cursed ×0.87 floor, +100 buy per charge; Shiren 5 blessed ×1.1 / cursed ×0.8, 5% per charge) and are encoded entirely in the JSON, not in code.
