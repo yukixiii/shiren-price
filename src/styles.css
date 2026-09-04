@@ -16,8 +16,30 @@
   font-family: 'Hiragino Sans', 'Yu Gothic UI', 'Meiryo', system-ui, sans-serif;
 }
 
+/* テーマ: data-theme 未指定 (自動) は OS 設定に従い、light / dark は強制する */
+:root[data-theme='light'] {
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #17191c;
+  --surface: #212428;
+  --text: #e8e5dd;
+  --text-sub: #9a978d;
+  --border: #3a3e44;
+  --accent: #4caf7d;
+  --accent-soft: #24352c;
+  --accent-text: #10160f;
+  --danger: #e07a63;
+  --blessed: #e0b94f;
+  --cursed: #a98fd6;
+  --done: #6b6e73;
+  --done-bg: #1b1d20;
+}
+
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme='light']) {
     --bg: #17191c;
     --surface: #212428;
     --text: #e8e5dd;
@@ -78,9 +100,32 @@ button {
   color: var(--accent);
 }
 
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .game-tabs {
   display: flex;
   gap: 6px;
+}
+
+.theme-toggle {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.theme-toggle:hover {
+  border-color: var(--accent);
 }
 
 .game-tab {

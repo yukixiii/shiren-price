@@ -6,6 +6,13 @@
     <meta name="description" content="風来のシレン5・6 値段識別ツール。買値・売値からアイテムを特定します。" />
     <meta name="theme-color" content="#1a5c3a" />
     <title>シレン値段識別</title>
+    <script>
+      // React 起動前にテーマを適用してちらつきを防ぐ (保存キーは useStoredState と同じ sp:theme)
+      try {
+        var t = JSON.parse(localStorage.getItem('sp:theme'))
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <div id="root"></div>

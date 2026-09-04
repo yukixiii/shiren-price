@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { CategoryTabs } from './components/CategoryTabs'
 import { DungeonSelector } from './components/DungeonSelector'
 import { GameSelector } from './components/GameSelector'
@@ -7,6 +7,7 @@ import { PriceChips } from './components/PriceChips'
 import { PriceInput } from './components/PriceInput'
 import { PriceTable } from './components/PriceTable'
 import { ResultList } from './components/ResultList'
+import { applyTheme, ThemeToggle, type Theme } from './components/ThemeToggle'
 import { games, getGame } from './data'
 import { identify, nearestPrices } from './engine/identify'
 import type { PriceType } from './types'
@@ -34,6 +35,8 @@ export default function App() {
     'sp:priceType',
     'buy',
   )
+  const [theme, setTheme] = useStoredState<Theme>('sp:theme', 'auto')
+  useEffect(() => applyTheme(theme), [theme])
   const [tab, setTab] = useState<Tab>('identify')
   const [category, setCategory] = useState('')
   const [priceText, setPriceText] = useState('')
@@ -79,15 +82,18 @@ export default function App() {
     <div className="app">
       <header className="app-header">
         <h1>シレン値段識別</h1>
-        <GameSelector
-          games={games}
-          gameId={game.id}
-          onChange={(id) => {
-            setGameId(id)
-            setPriceText('')
-            setCategory('')
-          }}
-        />
+        <div className="header-controls">
+          <GameSelector
+            games={games}
+            gameId={game.id}
+            onChange={(id) => {
+              setGameId(id)
+              setPriceText('')
+              setCategory('')
+            }}
+          />
+          <ThemeToggle theme={theme} onChange={setTheme} />
+        </div>
       </header>
 
       <nav className="main-tabs" role="tablist" aria-label="機能切替">

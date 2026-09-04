@@ -107,4 +107,23 @@ describe('App (実データでの結合テスト)', () => {
     expect(screen.getAllByText(/\+30\/回/).length).toBeGreaterThan(0)
     expect(screen.queryByText(/^回数ごとに/)).toBeNull()
   })
+
+  it('テーマボタンで 自動 → ライト → ダーク を循環し、html[data-theme] と保存値が変わる', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    const btn = screen.getByRole('button', { name: /テーマ: 自動/ })
+    expect(document.documentElement.dataset.theme).toBeUndefined()
+
+    await user.click(btn)
+    expect(screen.getByRole('button', { name: /テーマ: ライト/ })).toBeTruthy()
+    expect(document.documentElement.dataset.theme).toBe('light')
+    expect(localStorage.getItem('sp:theme')).toBe('"light"')
+
+    await user.click(screen.getByRole('button', { name: /テーマ: ライト/ }))
+    expect(document.documentElement.dataset.theme).toBe('dark')
+
+    await user.click(screen.getByRole('button', { name: /テーマ: ダーク/ }))
+    expect(screen.getByRole('button', { name: /テーマ: 自動/ })).toBeTruthy()
+    expect(document.documentElement.dataset.theme).toBeUndefined()
+  })
 })
