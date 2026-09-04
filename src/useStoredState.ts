@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 
-function read<T>(key: string): T | undefined {
+/** localStorage から読む(壊れていれば undefined) */
+export function readStored<T>(key: string): T | undefined {
   try {
     const raw = localStorage.getItem(key)
     return raw == null ? undefined : (JSON.parse(raw) as T)
@@ -14,13 +15,13 @@ export function useStoredState<T>(
   key: string,
   initial: T,
 ): [T, (v: T | ((prev: T) => T)) => void] {
-  const [value, setValue] = useState<T>(() => read<T>(key) ?? initial)
+  const [value, setValue] = useState<T>(() => readStored<T>(key) ?? initial)
   const loadedKey = useRef(key)
 
   useEffect(() => {
     if (loadedKey.current !== key) {
       loadedKey.current = key
-      setValue(read<T>(key) ?? initial)
+      setValue(readStored<T>(key) ?? initial)
     }
     // initial は再読込時のフォールバックのみに使う
     // eslint-disable-next-line react-hooks/exhaustive-deps

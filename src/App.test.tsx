@@ -3,6 +3,8 @@ import { cleanup, render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it } from 'vitest'
 import App from './App'
+import { games, getGame } from './data'
+import { codeFromHash, decodeShare, encodeShare } from './engine/share'
 
 beforeEach(() => localStorage.clear())
 afterEach(cleanup)
@@ -125,5 +127,90 @@ describe('App (実データでの結合テスト)', () => {
     await user.click(screen.getByRole('button', { name: /テーマ: ダーク/ }))
     expect(screen.getByRole('button', { name: /テーマ: 自動/ })).toBeTruthy()
     expect(document.documentElement.dataset.theme).toBeUndefined()
+  })
+})
+
+describe('識別済みデータの共有 (実データ)', () => {
+  afterEach(() => {
+    history.replaceState(null, '', '/')
+  })
+
+  it('共有ボタンで QR コードとリンクが出る', async () => {
+    const user = userEvent.setup()
+    localStorage.setItem('sp:shiren6:identified', JSON.stringify(['識別の巻物']))
+    render(<App />)
+    await user.click(screen.getByRole('tab', { name: /識別済み \(1\)/ }))
+    await user.click(screen.getByRole('button', { name: '共有' }))
+    const dialog = screen.getByRole('dialog', { name: '識別済みデータを共有' })
+    const link = within(dialog).getByLabelText('共有リンク') as HTMLInputElement
+    expect(link.value).toMatch(/#s=1\.shiren6\.\./)
+    expect(dialog.querySelector('.qr svg')).toBeTruthy()
+    // 出したリンクを復元すると同じ内容になる
+    const code = codeFromHash(new URL(link.value).hash)!
+    expect(decodeShare(games, code)?.identified).toEqual(['識別の巻物'])
+  })
+
+  it('共有リンクを開くと取り込み確認が出て、上書きで保存される', async () => {
+    const user = userEvent.setup()
+    const code = encodeShare(getGame('shiren6'), ['識別の巻物', '混乱の巻物'], 'togurojima-shinzui')
+    localStorage.setItem('sp:shiren6:identified', JSON.stringify(['白紙の巻物']))
+    history.replaceState(null, '', `/#s=${code}`)
+    render(<App />)
+    const dialog = screen.getByRole('dialog', { name: '共有された識別済みデータ' })
+    expect(within(dialog).getByText(/識別済み 2 件/)).toBeTruthy()
+    expect(within(dialog).getByText(/1 件あります/)).toBeTruthy()
+    await user.click(within(dialog).getByRole('button', { name: '上書きして取り込む' }))
+    expect(screen.queryByRole('dialog')).toBeNull()
+    expect(location.hash).toBe('')
+    expect(screen.getByText('識別済み 2 件')).toBeTruthy()
+    expect(screen.getByText('混乱の巻物 ✓')).toBeTruthy()
+    expect(screen.queryByText('白紙の巻物 ✓')).toBeNull()
+    // 復元順は JSON の並び順
+    expect(JSON.parse(localStorage.getItem('sp:shiren6:identified')!).sort()).toEqual(
+      ['混乱の巻物', '識別の巻物'].sort(),
+    )
+    expect(localStorage.getItem('sp:shiren6:dungeon')).toBe('"togurojima-shinzui"')
+    expect(screen.getByText(/「とぐろ島の神髄」に出現/)).toBeTruthy()
+  })
+
+  it('マージで取り込むと既存の記録も残る', async () => {
+    const user = userEvent.setup()
+    const code = encodeShare(getGame('shiren6'), ['識別の巻物'], '')
+    localStorage.setItem('sp:shiren6:identified', JSON.stringify(['白紙の巻物']))
+    history.replaceState(null, '', `/#s=${code}`)
+    render(<App />)
+    await user.click(screen.getByRole('button', { name: 'マージして取り込む' }))
+    expect(screen.getByText('識別済み 2 件')).toBeTruthy()
+    expect(screen.getByText('白紙の巻物 ✓')).toBeTruthy()
+    expect(screen.getByText('識別の巻物 ✓')).toBeTruthy()
+  })
+
+  it('別ゲームのリンクを開くとそのゲームに切り替えて取り込む', async () => {
+    const user = userEvent.setup()
+    const code = encodeShare(getGame('shiren5'), ['薬草'], '')
+    history.replaceState(null, '', `/#s=${code}`)
+    render(<App />)
+    expect(screen.getByText(/シレン5 の識別済み 1 件/)).toBeTruthy()
+    await user.click(screen.getByRole('button', { name: '上書きして取り込む' }))
+    expect(screen.getByRole('tab', { name: 'シレン5', selected: true })).toBeTruthy()
+    expect(screen.getByText('薬草 ✓')).toBeTruthy()
+    expect(localStorage.getItem('sp:shiren5:identified')).toContain('薬草')
+  })
+
+  it('キャンセルすると何も変わらず hash も消える', async () => {
+    const user = userEvent.setup()
+    const code = encodeShare(getGame('shiren6'), ['識別の巻物'], '')
+    history.replaceState(null, '', `/#s=${code}`)
+    render(<App />)
+    await user.click(screen.getByRole('button', { name: 'キャンセル' }))
+    expect(screen.queryByRole('dialog')).toBeNull()
+    expect(location.hash).toBe('')
+    expect(localStorage.getItem('sp:shiren6:identified')).toBe('[]')
+  })
+
+  it('壊れた共有リンクは無視する', () => {
+    history.replaceState(null, '', '/#s=garbage')
+    render(<App />)
+    expect(screen.queryByRole('dialog')).toBeNull()
   })
 })

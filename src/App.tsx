@@ -11,7 +11,16 @@ import { applyTheme, ThemeToggle, type Theme } from './components/ThemeToggle'
 import { games, getGame } from './data'
 import { identify, nearestPrices } from './engine/identify'
 import type { PriceType } from './types'
-import { useStoredState } from './useStoredState'
+import { readStored, useStoredState } from './useStoredState'
+import {
+  codeFromHash,
+  decodeShare,
+  encodeShare,
+  shareUrl,
+  type SharePayload,
+} from './engine/share'
+import { ImportDialog, type ImportMode } from './components/ImportDialog'
+import { ShareDialog } from './components/ShareDialog'
 
 type Tab = 'identify' | 'table' | 'identified'
 
@@ -42,6 +51,62 @@ export default function App() {
   const [priceText, setPriceText] = useState('')
 
   const identified = useMemo(() => new Set(identifiedList), [identifiedList])
+
+  // ---- 共有リンクからの取り込み ----
+  const [pendingImport, setPendingImport] = useState<SharePayload | null>(
+    () => {
+      const code = codeFromHash(location.hash)
+      return code ? decodeShare(games, code) : null
+    },
+  )
+  const importGame = pendingImport ? getGame(pendingImport.gameId) : null
+  const importExisting = pendingImport
+    ? pendingImport.gameId === game.id
+      ? identifiedList
+      : (readStored<string[]>(`sp:${pendingImport.gameId}:identified`) ?? [])
+    : []
+
+  const clearShareHash = () => {
+    setPendingImport(null)
+    if (location.hash) {
+      history.replaceState(null, '', location.pathname + location.search)
+    }
+  }
+
+  const applyImport = (mode: ImportMode) => {
+    if (!pendingImport) return
+    const base = mode === 'merge' ? importExisting : []
+    const list = [
+      ...base,
+      ...pendingImport.identified.filter((n) => !base.includes(n)),
+    ]
+    if (pendingImport.gameId === game.id) {
+      setIdentifiedList(list)
+      setDungeonId(pendingImport.dungeonId)
+    } else {
+      // 別ゲームへの取り込み: 保存先に直接書いてからゲームを切り替えると
+      // useStoredState がキー変更時に読み直す
+      localStorage.setItem(
+        `sp:${pendingImport.gameId}:identified`,
+        JSON.stringify(list),
+      )
+      localStorage.setItem(
+        `sp:${pendingImport.gameId}:dungeon`,
+        JSON.stringify(pendingImport.dungeonId),
+      )
+      setGameId(pendingImport.gameId)
+      setPriceText('')
+      setCategory('')
+    }
+    setTab('identified')
+    clearShareHash()
+  }
+
+  // ---- 共有ダイアログ ----
+  const [shareOpen, setShareOpen] = useState(false)
+  const shareLink = shareOpen
+    ? shareUrl(encodeShare(game, identifiedList, dungeonId))
+    : ''
   const price = priceText === '' ? undefined : Number(priceText)
 
   const toggleIdentified = (name: string) => {
@@ -197,9 +262,28 @@ export default function App() {
             identified={identified}
             onToggleIdentified={toggleIdentified}
             onReset={() => setIdentifiedList([])}
+            onShare={() => setShareOpen(true)}
           />
         )}
       </main>
+
+      {shareOpen && (
+        <ShareDialog
+          url={shareLink}
+          count={identified.size}
+          gameName={game.shortName}
+          onClose={() => setShareOpen(false)}
+        />
+      )}
+      {pendingImport && importGame && (
+        <ImportDialog
+          game={importGame}
+          payload={pendingImport}
+          existingCount={importExisting.length}
+          onApply={applyImport}
+          onCancel={clearShareHash}
+        />
+      )}
 
       <footer className="app-footer">
         <p>
