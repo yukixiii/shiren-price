@@ -61,4 +61,23 @@ describe('App (実データでの結合テスト)', () => {
     expect(screen.getByRole('heading', { name: 'お香' })).toBeTruthy()
     expect(screen.getByText('白紙の巻物')).toBeTruthy()
   })
+
+  it('回数単価がカテゴリ内で一律なら見出しにまとめ、各行には出さない', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    await user.click(screen.getByRole('tab', { name: '値段表' }))
+    // シレン6の杖は全て 買+100 / 売+40 なので見出し側に 1 回だけ出る
+    expect(screen.getAllByText('回数ごとに 買+100 / 売+40').length).toBeGreaterThan(0)
+    expect(screen.queryByText(/\+100\/回/)).toBeNull()
+  })
+
+  it('回数単価がばらつくカテゴリでは各行に表示する', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+    await user.click(screen.getByRole('tab', { name: 'シレン5' }))
+    await user.click(screen.getByRole('tab', { name: '値段表' }))
+    // シレン5の杖はアイテムごとに単価が異なるので行ごとに表示される
+    expect(screen.getAllByText(/\+30\/回/).length).toBeGreaterThan(0)
+    expect(screen.queryByText(/^回数ごとに/)).toBeNull()
+  })
 })

@@ -397,6 +397,14 @@ button {
   font-size: 0.78rem;
 }
 
+/* 値段表では回数単価を数値の下に落として、セル幅を抑える(名前列を潰さない) */
+.price-table .per-charge {
+  display: block;
+  font-size: 0.72rem;
+  color: var(--text-sub);
+  line-height: 1.2;
+}
+
 .no-result p {
   margin: 4px 0;
 }
@@ -417,10 +425,24 @@ button {
   gap: 16px;
 }
 
-.price-table-section h3 {
+.price-table-header {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
   margin: 0 0 6px;
+}
+
+.price-table-section h3 {
+  margin: 0;
   font-size: 0.95rem;
   color: var(--accent);
+}
+
+.per-charge-note {
+  font-size: 0.78rem;
+  color: var(--text-sub);
+  white-space: nowrap;
 }
 
 .table-scroll {
@@ -531,6 +553,12 @@ button {
 
   .app-main > * {
     grid-column: 1 / -1;
+  }
+
+  /* PC 幅では横に余裕があるので回数単価は数値と同じ行に戻す */
+  .price-table .per-charge {
+    display: inline;
+    margin-left: 4px;
   }
 
   .app-main > .price-chips {

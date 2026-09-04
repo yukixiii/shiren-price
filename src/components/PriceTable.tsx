@@ -1,5 +1,5 @@
 import { itemsInScope } from '../engine/identify'
-import type { GameData } from '../types'
+import type { GameData, ItemDef } from '../types'
 
 interface Props {
   game: GameData
@@ -7,6 +7,20 @@ interface Props {
   dungeonId: string
   identified: ReadonlySet<string>
   onToggleIdentified: (name: string) => void
+}
+
+/**
+ * 一覧内の全アイテムで回数単価が同じならその値を返す(なければ null)。
+ * 回数単価を持つアイテムが 1 つもない場合も null。
+ */
+function uniformPerCharge(
+  items: readonly ItemDef[],
+  key: 'buyPerCharge' | 'sellPerCharge',
+): number | null {
+  const withCharge = items.filter((i) => i[key] != null)
+  if (withCharge.length === 0) return null
+  const first = withCharge[0][key]!
+  return withCharge.every((i) => i[key] === first) ? first : null
 }
 
 /** カテゴリ別の値段一覧(逆引き用) */
@@ -30,9 +44,20 @@ export function PriceTable({
         }).slice()
         if (items.length === 0) return null
         items.sort((a, b) => a.buy - b.buy || a.name.localeCompare(b.name, 'ja'))
+        // 回数単価がカテゴリ内で一律なら見出しに 1 回だけ出し、各行からは省く
+        const uniformBuy = uniformPerCharge(items, 'buyPerCharge')
+        const uniformSell = uniformPerCharge(items, 'sellPerCharge')
+        const hoisted = uniformBuy != null && uniformSell != null
         return (
           <section key={c.id} className="price-table-section">
-            <h3>{c.name}</h3>
+            <div className="price-table-header">
+              <h3>{c.name}</h3>
+              {hoisted && (
+                <span className="per-charge-note">
+                  回数ごとに 買+{uniformBuy} / 売+{uniformSell}
+                </span>
+              )}
+            </div>
             <div className="table-scroll">
               <table className="price-table">
                 <thead>
@@ -59,7 +84,7 @@ export function PriceTable({
                         <td>{item.name}</td>
                         <td className="num">
                           {item.buy.toLocaleString()}
-                          {item.buyPerCharge != null && (
+                          {!hoisted && item.buyPerCharge != null && (
                             <span className="per-charge">
                               {' '}
                               +{item.buyPerCharge}/回
@@ -68,7 +93,7 @@ export function PriceTable({
                         </td>
                         <td className="num">
                           {item.sell.toLocaleString()}
-                          {item.sellPerCharge != null && (
+                          {!hoisted && item.sellPerCharge != null && (
                             <span className="per-charge">
                               {' '}
                               +{item.sellPerCharge}/回
