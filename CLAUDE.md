@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-シレン値段識別 — a React 19 + Vite + TypeScript web app for price-identifying unidentified items in 風来のシレン 5plus / 6 from shop buy/sell prices. Deployed to GitHub Pages (`base: '/shiren-price/'` in `vite.config.ts`; keep in sync with the repo name). UI text, comments, and test names are in Japanese.
+シレン値段識別 — a React 19 + Vite + TypeScript web app for price-identifying unidentified items in 風来のシレン (SFC) / 4plus / 5plus / 6 / アスカ見参 from shop buy/sell prices. Deployed to GitHub Pages (`base: '/shiren-price/'` in `vite.config.ts`; keep in sync with the repo name). UI text, comments, and test names are in Japanese.
 
 ## Commands
 
