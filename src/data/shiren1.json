@@ -1,0 +1,821 @@
+{
+ "id": "shiren1",
+ "name": "不思議のダンジョン2 風来のシレン (SFC)",
+ "shortName": "SFC",
+ "priceModifiers": {
+  "blessed": 1,
+  "cursed": 1
+ },
+ "rounding": "floor",
+ "categories": [
+  {
+   "id": "kusa",
+   "name": "草・種",
+   "hasCharges": false
+  },
+  {
+   "id": "scroll",
+   "name": "巻物",
+   "hasCharges": false
+  },
+  {
+   "id": "staff",
+   "name": "杖",
+   "hasCharges": true
+  },
+  {
+   "id": "bracelet",
+   "name": "腕輪",
+   "hasCharges": false
+  },
+  {
+   "id": "pot",
+   "name": "壺",
+   "hasCharges": true
+  }
+ ],
+ "items": [
+  {
+   "name": "雑草",
+   "category": "kusa",
+   "buy": 50,
+   "sell": 25
+  },
+  {
+   "name": "めぐすり草",
+   "category": "kusa",
+   "buy": 50,
+   "sell": 25
+  },
+  {
+   "name": "薬草",
+   "category": "kusa",
+   "buy": 50,
+   "sell": 25
+  },
+  {
+   "name": "どく草",
+   "category": "kusa",
+   "buy": 50,
+   "sell": 25
+  },
+  {
+   "name": "弟切草",
+   "category": "kusa",
+   "buy": 100,
+   "sell": 50
+  },
+  {
+   "name": "超不幸の種",
+   "category": "kusa",
+   "buy": 200,
+   "sell": 30
+  },
+  {
+   "name": "不幸の種",
+   "category": "kusa",
+   "buy": 200,
+   "sell": 40
+  },
+  {
+   "name": "くねくね草",
+   "category": "kusa",
+   "buy": 200,
+   "sell": 50
+  },
+  {
+   "name": "胃縮小の種",
+   "category": "kusa",
+   "buy": 200,
+   "sell": 60
+  },
+  {
+   "name": "キグニ族の種",
+   "category": "kusa",
+   "buy": 200,
+   "sell": 100
+  },
+  {
+   "name": "命の草",
+   "category": "kusa",
+   "buy": 500,
+   "sell": 200
+  },
+  {
+   "name": "ドラゴン草",
+   "category": "kusa",
+   "buy": 500,
+   "sell": 250
+  },
+  {
+   "name": "ちからの草",
+   "category": "kusa",
+   "buy": 500,
+   "sell": 250
+  },
+  {
+   "name": "どく消し草",
+   "category": "kusa",
+   "buy": 650,
+   "sell": 250
+  },
+  {
+   "name": "胃拡張の種",
+   "category": "kusa",
+   "buy": 1000,
+   "sell": 500
+  },
+  {
+   "name": "しあわせ草",
+   "category": "kusa",
+   "buy": 1000,
+   "sell": 500
+  },
+  {
+   "name": "無敵草",
+   "category": "kusa",
+   "buy": 3000,
+   "sell": 100
+  },
+  {
+   "name": "混乱草",
+   "category": "kusa",
+   "buy": 3000,
+   "sell": 1500
+  },
+  {
+   "name": "睡眠草",
+   "category": "kusa",
+   "buy": 5000,
+   "sell": 2500
+  },
+  {
+   "name": "復活の草",
+   "category": "kusa",
+   "buy": 5000,
+   "sell": 2500
+  },
+  {
+   "name": "天使の種",
+   "category": "kusa",
+   "buy": 10000,
+   "sell": 1500
+  },
+  {
+   "name": "モンスターハウスの巻物",
+   "category": "scroll",
+   "buy": 80,
+   "sell": 40
+  },
+  {
+   "name": "混乱の巻物",
+   "category": "scroll",
+   "buy": 100,
+   "sell": 50
+  },
+  {
+   "name": "敵倍速の巻物",
+   "category": "scroll",
+   "buy": 100,
+   "sell": 50
+  },
+  {
+   "name": "バクスイの巻物",
+   "category": "scroll",
+   "buy": 200,
+   "sell": 100
+  },
+  {
+   "name": "迷子の巻物",
+   "category": "scroll",
+   "buy": 200,
+   "sell": 100
+  },
+  {
+   "name": "識別の巻物",
+   "category": "scroll",
+   "buy": 300,
+   "sell": 150
+  },
+  {
+   "name": "あかりの巻物",
+   "category": "scroll",
+   "buy": 300,
+   "sell": 250
+  },
+  {
+   "name": "拾えずの巻物",
+   "category": "scroll",
+   "buy": 300,
+   "sell": 300
+  },
+  {
+   "name": "大部屋の巻物",
+   "category": "scroll",
+   "buy": 400,
+   "sell": 200
+  },
+  {
+   "name": "自爆の巻物",
+   "category": "scroll",
+   "buy": 500,
+   "sell": 100
+  },
+  {
+   "name": "くちなしの巻物",
+   "category": "scroll",
+   "buy": 500,
+   "sell": 250
+  },
+  {
+   "name": "おはらいの巻物",
+   "category": "scroll",
+   "buy": 500,
+   "sell": 250
+  },
+  {
+   "name": "地の恵みの巻物",
+   "category": "scroll",
+   "buy": 800,
+   "sell": 400
+  },
+  {
+   "name": "天の恵みの巻物",
+   "category": "scroll",
+   "buy": 800,
+   "sell": 400
+  },
+  {
+   "name": "パワーアップの巻物",
+   "category": "scroll",
+   "buy": 1000,
+   "sell": 100
+  },
+  {
+   "name": "困った時の巻物",
+   "category": "scroll",
+   "buy": 1000,
+   "sell": 250
+  },
+  {
+   "name": "壺増大の巻物",
+   "category": "scroll",
+   "buy": 1000,
+   "sell": 500
+  },
+  {
+   "name": "真空斬りの巻物",
+   "category": "scroll",
+   "buy": 1000,
+   "sell": 500
+  },
+  {
+   "name": "ワナの巻物",
+   "category": "scroll",
+   "buy": 1000,
+   "sell": 500
+  },
+  {
+   "name": "メッキの巻物",
+   "category": "scroll",
+   "buy": 1500,
+   "sell": 500
+  },
+  {
+   "name": "吸い出しの巻物",
+   "category": "scroll",
+   "buy": 1500,
+   "sell": 750
+  },
+  {
+   "name": "白紙の巻物",
+   "category": "scroll",
+   "buy": 3000,
+   "sell": 1000
+  },
+  {
+   "name": "ジェノサイドの巻物",
+   "category": "scroll",
+   "buy": 50000,
+   "sell": 750
+  },
+  {
+   "name": "ガイコツまどうの杖",
+   "category": "staff",
+   "buy": 300,
+   "sell": 150,
+   "buyPerCharge": 30,
+   "sellPerCharge": 15,
+   "chargeMin": 5,
+   "chargeMax": 7
+  },
+  {
+   "name": "しあわせの杖",
+   "category": "staff",
+   "buy": 500,
+   "sell": 250,
+   "buyPerCharge": 50,
+   "sellPerCharge": 25,
+   "chargeMin": 5,
+   "chargeMax": 7
+  },
+  {
+   "name": "不幸の杖",
+   "category": "staff",
+   "buy": 500,
+   "sell": 250,
+   "buyPerCharge": 50,
+   "sellPerCharge": 25,
+   "chargeMin": 5,
+   "chargeMax": 7
+  },
+  {
+   "name": "ふきとばしの杖",
+   "category": "staff",
+   "buy": 500,
+   "sell": 250,
+   "buyPerCharge": 50,
+   "sellPerCharge": 25,
+   "chargeMin": 5,
+   "chargeMax": 7
+  },
+  {
+   "name": "一時しのぎの杖",
+   "category": "staff",
+   "buy": 500,
+   "sell": 250,
+   "buyPerCharge": 50,
+   "sellPerCharge": 25,
+   "chargeMin": 5,
+   "chargeMax": 7
+  },
+  {
+   "name": "場所替えの杖",
+   "category": "staff",
+   "buy": 700,
+   "sell": 350,
+   "buyPerCharge": 70,
+   "sellPerCharge": 35,
+   "chargeMin": 5,
+   "chargeMax": 7
+  },
+  {
+   "name": "かなしばりの杖",
+   "category": "staff",
+   "buy": 1000,
+   "sell": 500,
+   "buyPerCharge": 100,
+   "sellPerCharge": 50,
+   "chargeMin": 5,
+   "chargeMax": 7
+  },
+  {
+   "name": "身がわりの杖",
+   "category": "staff",
+   "buy": 1000,
+   "sell": 500,
+   "buyPerCharge": 100,
+   "sellPerCharge": 50,
+   "chargeMin": 5,
+   "chargeMax": 7
+  },
+  {
+   "name": "痛み分けの杖",
+   "category": "staff",
+   "buy": 1000,
+   "sell": 500,
+   "buyPerCharge": 100,
+   "sellPerCharge": 50,
+   "chargeMin": 5,
+   "chargeMax": 7
+  },
+  {
+   "name": "封印の杖",
+   "category": "staff",
+   "buy": 1000,
+   "sell": 500,
+   "buyPerCharge": 100,
+   "sellPerCharge": 50,
+   "chargeMin": 5,
+   "chargeMax": 8
+  },
+  {
+   "name": "ブフーの杖",
+   "category": "staff",
+   "buy": 2000,
+   "sell": 500,
+   "buyPerCharge": 200,
+   "sellPerCharge": 50,
+   "chargeMin": 5,
+   "chargeMax": 7
+  },
+  {
+   "name": "遠投の腕輪",
+   "category": "bracelet",
+   "buy": 1200,
+   "sell": 600
+  },
+  {
+   "name": "呪いよけの腕輪",
+   "category": "bracelet",
+   "buy": 2400,
+   "sell": 1200
+  },
+  {
+   "name": "混乱よけの腕輪",
+   "category": "bracelet",
+   "buy": 2400,
+   "sell": 1200
+  },
+  {
+   "name": "錆よけの腕輪",
+   "category": "bracelet",
+   "buy": 2400,
+   "sell": 1200
+  },
+  {
+   "name": "通過の腕輪",
+   "category": "bracelet",
+   "buy": 2400,
+   "sell": 1200
+  },
+  {
+   "name": "レベル固定の腕輪",
+   "category": "bracelet",
+   "buy": 2400,
+   "sell": 1200
+  },
+  {
+   "name": "垂れ流しの腕輪",
+   "category": "bracelet",
+   "buy": 2400,
+   "sell": 1200
+  },
+  {
+   "name": "透視の腕輪",
+   "category": "bracelet",
+   "buy": 3600,
+   "sell": 1800
+  },
+  {
+   "name": "回復の腕輪",
+   "category": "bracelet",
+   "buy": 5000,
+   "sell": 2500
+  },
+  {
+   "name": "ワナ師の腕輪",
+   "category": "bracelet",
+   "buy": 5000,
+   "sell": 2500
+  },
+  {
+   "name": "しあわせの腕輪",
+   "category": "bracelet",
+   "buy": 10000,
+   "sell": 5000
+  },
+  {
+   "name": "値切の腕輪",
+   "category": "bracelet",
+   "buy": 10000,
+   "sell": 5000
+  },
+  {
+   "name": "会心の腕輪",
+   "category": "bracelet",
+   "buy": 10000,
+   "sell": 5000
+  },
+  {
+   "name": "痛恨の腕輪",
+   "category": "bracelet",
+   "buy": 10000,
+   "sell": 5000
+  },
+  {
+   "name": "識別の腕輪",
+   "category": "bracelet",
+   "buy": 30000,
+   "sell": 15000
+  },
+  {
+   "name": "やりすごしの壺",
+   "category": "pot",
+   "buy": 1000,
+   "sell": 400,
+   "buyPerCharge": 0,
+   "sellPerCharge": 0,
+   "chargeMin": 3,
+   "chargeMax": 6
+  },
+  {
+   "name": "保存の壺",
+   "category": "pot",
+   "buy": 1600,
+   "sell": 600,
+   "buyPerCharge": 0,
+   "sellPerCharge": 0,
+   "chargeMin": 3,
+   "chargeMax": 6
+  },
+  {
+   "name": "底抜けの壺",
+   "category": "pot",
+   "buy": 2500,
+   "sell": 400,
+   "buyPerCharge": 0,
+   "sellPerCharge": 0,
+   "chargeMin": 3,
+   "chargeMax": 6
+  },
+  {
+   "name": "弱化の壺",
+   "category": "pot",
+   "buy": 1000,
+   "sell": 200,
+   "buyPerCharge": 100,
+   "sellPerCharge": 20,
+   "chargeMin": 3,
+   "chargeMax": 6
+  },
+  {
+   "name": "識別の壺",
+   "category": "pot",
+   "buy": 1000,
+   "sell": 500,
+   "buyPerCharge": 100,
+   "sellPerCharge": 50,
+   "chargeMin": 3,
+   "chargeMax": 6
+  },
+  {
+   "name": "変化の壺",
+   "category": "pot",
+   "buy": 1000,
+   "sell": 500,
+   "buyPerCharge": 100,
+   "sellPerCharge": 50,
+   "chargeMin": 3,
+   "chargeMax": 6
+  },
+  {
+   "name": "倉庫の壺",
+   "category": "pot",
+   "buy": 2500,
+   "sell": 1200,
+   "buyPerCharge": 250,
+   "sellPerCharge": 120,
+   "chargeMin": 3,
+   "chargeMax": 6
+  },
+  {
+   "name": "分裂の壺",
+   "category": "pot",
+   "buy": 3000,
+   "sell": 1500,
+   "buyPerCharge": 300,
+   "sellPerCharge": 150,
+   "chargeMin": 3,
+   "chargeMax": 6
+  },
+  {
+   "name": "合成の壺",
+   "category": "pot",
+   "buy": 3500,
+   "sell": 1500,
+   "buyPerCharge": 350,
+   "sellPerCharge": 150,
+   "chargeMin": 3,
+   "chargeMax": 6
+  },
+  {
+   "name": "うっぷんばらしの壺",
+   "category": "pot",
+   "buy": 7500,
+   "sell": 1500,
+   "buyPerCharge": 750,
+   "sellPerCharge": 150,
+   "chargeMin": 3,
+   "chargeMax": 6
+  },
+  {
+   "name": "アホくさい壺",
+   "category": "pot",
+   "buy": 7500,
+   "sell": 1500,
+   "buyPerCharge": 750,
+   "sellPerCharge": 150,
+   "chargeMin": 3,
+   "chargeMax": 6
+  },
+  {
+   "name": "割れない壺",
+   "category": "pot",
+   "buy": 10000,
+   "sell": 1500,
+   "buyPerCharge": 1000,
+   "sellPerCharge": 150,
+   "chargeMin": 3,
+   "chargeMax": 6
+  },
+  {
+   "name": "強化の壺",
+   "category": "pot",
+   "buy": 10000,
+   "sell": 5000,
+   "buyPerCharge": 1000,
+   "sellPerCharge": 500,
+   "chargeMin": 3,
+   "chargeMax": 6
+  },
+  {
+   "name": "ガイバラの壺",
+   "category": "pot",
+   "buy": 15000,
+   "sell": 1500,
+   "buyPerCharge": 1500,
+   "sellPerCharge": 150,
+   "chargeMin": 3,
+   "chargeMax": 6
+  },
+  {
+   "name": "背中の壺",
+   "category": "pot",
+   "buy": 1500,
+   "sell": 700,
+   "buyPerCharge": 150,
+   "sellPerCharge": 70,
+   "chargeMin": 3,
+   "chargeMax": 6
+  },
+  {
+   "name": "トドの壺",
+   "category": "pot",
+   "buy": 1600,
+   "sell": 600,
+   "buyPerCharge": 160,
+   "sellPerCharge": 60,
+   "chargeMin": 3,
+   "chargeMax": 6
+  },
+  {
+   "name": "魔物のるつぼ",
+   "category": "pot",
+   "buy": 2000,
+   "sell": 300,
+   "buyPerCharge": 200,
+   "sellPerCharge": 30,
+   "chargeMin": 3,
+   "chargeMax": 6
+  }
+ ],
+ "dungeons": [
+  {
+   "id": "fei-final",
+   "name": "フェイの最終問題",
+   "itemPool": [
+    "めぐすり草",
+    "薬草",
+    "弟切草",
+    "超不幸の種",
+    "不幸の種",
+    "くねくね草",
+    "胃縮小の種",
+    "キグニ族の種",
+    "命の草",
+    "ちからの草",
+    "どく消し草",
+    "胃拡張の種",
+    "しあわせ草",
+    "無敵草",
+    "復活の草",
+    "天使の種",
+    "モンスターハウスの巻物",
+    "敵倍速の巻物",
+    "迷子の巻物",
+    "識別の巻物",
+    "拾えずの巻物",
+    "大部屋の巻物",
+    "自爆の巻物",
+    "くちなしの巻物",
+    "おはらいの巻物",
+    "地の恵みの巻物",
+    "天の恵みの巻物",
+    "パワーアップの巻物",
+    "困った時の巻物",
+    "壺増大の巻物",
+    "ワナの巻物",
+    "メッキの巻物",
+    "吸い出しの巻物",
+    "白紙の巻物",
+    "ジェノサイドの巻物",
+    "ガイコツまどうの杖",
+    "しあわせの杖",
+    "不幸の杖",
+    "ふきとばしの杖",
+    "一時しのぎの杖",
+    "場所替えの杖",
+    "かなしばりの杖",
+    "身がわりの杖",
+    "痛み分けの杖",
+    "封印の杖",
+    "ブフーの杖",
+    "遠投の腕輪",
+    "呪いよけの腕輪",
+    "混乱よけの腕輪",
+    "錆よけの腕輪",
+    "通過の腕輪",
+    "レベル固定の腕輪",
+    "垂れ流しの腕輪",
+    "透視の腕輪",
+    "回復の腕輪",
+    "ワナ師の腕輪",
+    "しあわせの腕輪",
+    "値切の腕輪",
+    "会心の腕輪",
+    "痛恨の腕輪",
+    "識別の腕輪",
+    "やりすごしの壺",
+    "保存の壺",
+    "底抜けの壺",
+    "弱化の壺",
+    "識別の壺",
+    "変化の壺",
+    "倉庫の壺",
+    "分裂の壺",
+    "合成の壺",
+    "うっぷんばらしの壺",
+    "アホくさい壺",
+    "割れない壺",
+    "強化の壺",
+    "ガイバラの壺",
+    "背中の壺",
+    "トドの壺",
+    "魔物のるつぼ"
+   ],
+   "note": "全アイテム未識別。51F以降の店限定品(識別の腕輪・超不幸の種など)も含む。モンスター由来で識別済みの雑草・どく草・混乱草・睡眠草は除外"
+  },
+  {
+   "id": "table-mountain",
+   "name": "テーブルマウンテン(こばみ谷)",
+   "itemPool": [
+    "不幸の杖",
+    "ふきとばしの杖",
+    "一時しのぎの杖",
+    "場所替えの杖",
+    "かなしばりの杖",
+    "身がわりの杖",
+    "痛み分けの杖",
+    "ブフーの杖",
+    "遠投の腕輪",
+    "呪いよけの腕輪",
+    "混乱よけの腕輪",
+    "錆よけの腕輪",
+    "透視の腕輪",
+    "回復の腕輪",
+    "しあわせの腕輪",
+    "値切の腕輪",
+    "会心の腕輪",
+    "やりすごしの壺",
+    "保存の壺",
+    "識別の壺",
+    "変化の壺",
+    "倉庫の壺",
+    "合成の壺",
+    "背中の壺",
+    "トドの壺"
+   ],
+   "note": "未識別なのは腕輪・杖・壺のみ(草・巻物は識別済み)。ダンジョン内に店は出ないため町の店・売却での識別向け"
+  },
+  {
+   "id": "kakejiku",
+   "name": "掛軸裏の洞窟",
+   "itemPool": [
+    "ふきとばしの杖",
+    "場所替えの杖",
+    "かなしばりの杖",
+    "やりすごしの壺",
+    "倉庫の壺"
+   ],
+   "note": "未識別なのは杖・壺のみ(腕輪は初期装備のワナ師の腕輪だけ)"
+  },
+  {
+   "id": "shokujin",
+   "name": "食神のほこら",
+   "itemPool": [
+    "しあわせの杖",
+    "不幸の杖",
+    "ふきとばしの杖",
+    "場所替えの杖",
+    "ブフーの杖",
+    "保存の壺",
+    "底抜けの壺",
+    "倉庫の壺",
+    "背中の壺",
+    "魔物のるつぼ"
+   ],
+   "note": "未識別なのは杖・壺のみ(草・巻物は識別済み)"
+  }
+ ]
+}

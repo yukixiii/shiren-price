@@ -128,3 +128,31 @@ describe('nearestPrices', () => {
     ).toEqual([40, 100])
   })
 })
+
+// SFC版のように祝福が存在せず呪いも価格に影響しないタイトル、回数で価格が変わらない壺
+describe('倍率1の状態と単価0のアイテム', () => {
+  const sfcLike: GameData = {
+    ...game,
+    priceModifiers: { blessed: 1, cursed: 1 },
+    categories: [{ id: 'pot', name: '壺', hasCharges: true }],
+    items: [
+      { name: '保存の壺', category: 'pot', buy: 1600, sell: 600, buyPerCharge: 0, sellPerCharge: 0, chargeMin: 3, chargeMax: 6 },
+      { name: '識別の壺', category: 'pot', buy: 1000, sell: 500, buyPerCharge: 100, sellPerCharge: 50, chargeMin: 3, chargeMax: 6 },
+    ],
+    dungeons: [],
+  }
+  it('倍率が1の状態は候補に出ない(通常のみ)', () => {
+    const r = identify(sfcLike, { priceType: 'buy', price: 1300 })
+    expect(r.map((m) => [m.item.name, m.state, m.charges])).toEqual([['識別の壺', 'normal', 3]])
+  })
+  it('単価0のアイテムは回数変動なしとして1件だけ一致する', () => {
+    expect(chargeRangeOf(sfcLike.items[0])).toBeNull()
+    const r = identify(sfcLike, { priceType: 'sell', price: 600 })
+    expect(r.map((m) => [m.item.name, m.state, m.charges])).toEqual([['保存の壺', 'normal', undefined]])
+  })
+  it('倍率が1でない側の状態だけは引き続き候補に出る', () => {
+    const half = { ...sfcLike, priceModifiers: { blessed: 1, cursed: 0.5 } }
+    const r = identify(half, { priceType: 'sell', price: 300 })
+    expect(r.map((m) => [m.item.name, m.state])).toEqual([['保存の壺', 'cursed']])
+  })
+})

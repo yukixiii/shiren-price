@@ -14,7 +14,7 @@ npm test                          # vitest run (all tests)
 npx vitest run src/engine         # run one directory / file
 npx vitest run -t "ダンジョン"     # run tests matching a name
 npm run build                     # tsc -b && vite build -> dist/
-node scripts/validate-data.mjs src/data/shiren5.json src/data/shiren6.json src/data/shiren4.json src/data/asuka.json   # schema/consistency check for game data
+node scripts/validate-data.mjs src/data/shiren5.json src/data/shiren6.json src/data/shiren4.json src/data/asuka.json src/data/shiren1.json   # schema/consistency check for game data
 ```
 
 There is no lint script; `tsc -b` (strict, `noUnusedLocals`/`noUnusedParameters`) is the type gate and runs as part of `build`. CI (`.github/workflows/deploy.yml`) runs `npm test` then `npm run build` on every push to `main` and deploys `dist/`.

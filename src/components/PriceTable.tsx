@@ -17,7 +17,7 @@ function uniformPerCharge(
   items: readonly ItemDef[],
   key: 'buyPerCharge' | 'sellPerCharge',
 ): number | null {
-  const withCharge = items.filter((i) => i[key] != null)
+  const withCharge = items.filter((i) => i[key])
   if (withCharge.length === 0) return null
   const first = withCharge[0][key]!
   return withCharge.every((i) => i[key] === first) ? first : null
@@ -105,7 +105,7 @@ export function PriceTable({
                         )}
                         <td className="num">
                           {item.buy.toLocaleString()}
-                          {!hoisted && item.buyPerCharge != null && (
+                          {!hoisted && !!item.buyPerCharge && (
                             <span className="per-charge">
                               {' '}
                               +{item.buyPerCharge}/回
@@ -114,7 +114,7 @@ export function PriceTable({
                         </td>
                         <td className="num">
                           {item.sell.toLocaleString()}
-                          {!hoisted && item.sellPerCharge != null && (
+                          {!hoisted && !!item.sellPerCharge && (
                             <span className="per-charge">
                               {' '}
                               +{item.sellPerCharge}/回

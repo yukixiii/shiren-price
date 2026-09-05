@@ -14,6 +14,18 @@
   - とぐろ島の神髄: https://shiren6.game-info.wiki/d/%A4%C8%A4%B0%A4%ED%C5%E7%A4%CE%BF%C0%BF%F1
   - 水龍の洞窟: https://shiren6.game-info.wiki/d/%BF%E5%CE%B6%A4%CE%C6%B6%B7%A2
   - 推測の修験道: https://shiren6.game-info.wiki/d/%BF%E4%C2%AC%A4%CE%BD%A4%B8%B3%C6%BB
+  - 推測の修験道 裏: https://shiren6.game-info.wiki/d/%BF%E4%C2%AC%A4%CE%BD%A4%B8%B3%C6%BB%20%CE%A2
+  - 鬼木島: https://shiren6.game-info.wiki/d/%B5%B4%CC%DA%C5%E7
+  - ヤマカガシ峠: https://shiren6.game-info.wiki/d/%A5%E4%A5%DE%A5%AB%A5%AC%A5%B7%C6%BD
+  - 無双の島: https://shiren6.game-info.wiki/d/%CC%B5%C1%D0%A4%CE%C5%E7
+  - 風来街道: https://shiren6.game-info.wiki/d/%C9%F7%CD%E8%B3%B9%C6%BB
+  - 超・神髄: https://shiren6.game-info.wiki/d/%C4%B6%A1%A6%BF%C0%BF%F1
+  - 沈黙の神髄: https://shiren6.game-info.wiki/d/%C4%C0%CC%DB%A4%CE%BF%C0%BF%F1
+  - （上記7ダンジョンは 2026-09-05 追加。各ページ「出現アイテム」節の解析データ由来の出現率表(床落ち/壁内/浮島 等の全列)と
+    カテゴリ別の入手経路表(床落/店売/願い/敵/柱/ト/島/変/ビ/黄/他)の行名を合算し、items の name と完全一致で照合。
+    表記ゆれ: 錆びよけの腕輪→錆よけの腕輪、場所替えの杖→場所がえの杖 を読み替え。
+    鬼木島・ヤマカガシ峠は基本情報の「未識別アイテム」にお香が無いため、表にお香があっても itemPool から除外。
+    風来街道・超・神髄・沈黙の神髄は全151種が出現表に載っている。）
   - （検討して不採用）買い物上手の修験道: https://shiren6.game-info.wiki/d/%C7%E3%A4%A4%CA%AA%BE%E5%BC%EA%A4%CE%BD%A4%B8%B3%C6%BB
 - **神ゲー攻略 (kamigame)** 全道具の値段一覧（照合用）: https://kamigame.jp/shiren6/page/301245427846494629.html
 - **aogondo アイテム価格メモ**（照合用）: https://www.aogondo.net/data_files/shiren6_memo.html

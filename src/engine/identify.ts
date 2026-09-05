@@ -58,7 +58,8 @@ export function priceOf(
 
 /** 入手時にありうる回数の幅 [min, max]。回数で変動しないアイテムなら null */
 export function chargeRangeOf(item: ItemDef): [number, number] | null {
-  if (item.buyPerCharge == null && item.sellPerCharge == null) return null
+  // 単価が両方 0(または未定義)なら回数で価格が変わらない(SFCの保存の壺など)
+  if (!item.buyPerCharge && !item.sellPerCharge) return null
   const min = item.chargeMin ?? 0
   return [min, item.chargeMax ?? min]
 }
@@ -88,13 +89,23 @@ export function itemsInScope(
 }
 
 /** 値段からの候補検索。カテゴリ・ダンジョンで絞り込み、祝福/呪い・回数変動も照合する */
+/** 価格が通常と変わらない状態(倍率1)は候補に出さない(SFCは祝福なし・呪いも価格不変) */
+function statesOf(game: GameData): ItemState[] {
+  return STATE_ORDER.filter(
+    (s) =>
+      s === 'normal' ||
+      (s === 'blessed' ? game.priceModifiers.blessed : game.priceModifiers.cursed) !== 1,
+  )
+}
+
 export function identify(game: GameData, query: IdentifyQuery): Match[] {
   const matches: Match[] = []
   if (!Number.isFinite(query.price) || query.price <= 0) return matches
+  const states = statesOf(game)
   for (const item of itemsInScope(game, query)) {
     for (const charges of chargeRange(item)) {
       const c = Number.isNaN(charges) ? undefined : charges
-      for (const state of STATE_ORDER) {
+      for (const state of states) {
         if (priceOf(game, item, query.priceType, state, c) === query.price) {
           matches.push({ item, state, charges: c })
         }

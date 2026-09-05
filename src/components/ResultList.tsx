@@ -98,7 +98,7 @@ export function ResultList({
             <span className="result-prices">
               買 {priceOf(game, m.item, 'buy', 'normal', m.charges).toLocaleString()}{' '}
               / 売 {priceOf(game, m.item, 'sell', 'normal', m.charges).toLocaleString()}
-              {m.item.buyPerCharge != null && (
+              {!!m.item.buyPerCharge && (
                 <span className="per-charge"> +{m.item.buyPerCharge}/回</span>
               )}
             </span>

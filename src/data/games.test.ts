@@ -80,3 +80,24 @@ describe('アスカ見参 実データ', () => {
     expect(game.items.find((i) => i.name === '合成の壺')).toMatchObject({ chargeMin: 2, chargeMax: 4 })
   })
 })
+
+describe('初代シレン(SFC) 実データ', () => {
+  const game = getGame('shiren1')
+  it('祝福・呪いの候補が出ない(価格変動なし)', () => {
+    const r = identify(game, { priceType: 'buy', price: 2400, category: 'bracelet' })
+    expect(r.length).toBeGreaterThan(0)
+    expect(r.every((m) => m.state === 'normal')).toBe(true)
+  })
+  it('杖は基本価格+10%×回数: 買値1050は場所替えの杖[5]のみ、1800は封印の杖[8]のみ', () => {
+    expect(identify(game, { priceType: 'buy', price: 1050, category: 'staff' }).map((m) => [m.item.name, m.charges])).toEqual([['場所替えの杖', 5]])
+    expect(identify(game, { priceType: 'buy', price: 1800, category: 'staff' }).map((m) => [m.item.name, m.charges])).toEqual([['封印の杖', 8]])
+  })
+  it('容量で値段が変わらない壺は回数なしで1件(保存の壺 売値600)', () => {
+    const r = identify(game, { priceType: 'sell', price: 600, category: 'pot' })
+    expect(r.map((m) => [m.item.name, m.charges])).toEqual([['保存の壺', undefined]])
+  })
+  it('こばみ谷では草・巻物は候補に出ない', () => {
+    const r = identify(game, { priceType: 'buy', price: 300, dungeonId: 'table-mountain' })
+    expect(r).toEqual([])
+  })
+})

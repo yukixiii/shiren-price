@@ -36,7 +36,7 @@ describe('App (実データでの結合テスト)', () => {
   it('シレン4・アスカのタブがあり、切り替えるとそのタイトルのデータになる', async () => {
     const user = userEvent.setup()
     render(<App />)
-    expect(screen.getAllByRole('tab', { name: /シレン6|シレン5|シレン4|アスカ/ })).toHaveLength(4)
+    expect(screen.getAllByRole('tab', { name: /シレン6|シレン5|シレン4|アスカ|SFC/ })).toHaveLength(5)
     await user.click(screen.getByRole('tab', { name: 'アスカ' }))
     await user.type(screen.getByLabelText('値段'), '1120')
     await user.click(screen.getByRole('button', { name: '杖' }))

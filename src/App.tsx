@@ -287,8 +287,10 @@ export default function App() {
 
       <footer className="app-footer">
         <p>
-          {game.name} / 祝福 ×{game.priceModifiers.blessed} ・ 呪い ×
-          {game.priceModifiers.cursed}
+          {game.name} /{' '}
+          {game.priceModifiers.blessed === 1 && game.priceModifiers.cursed === 1
+            ? '祝福・呪いによる価格変動なし'
+            : `祝福 ×${game.priceModifiers.blessed} ・ 呪い ×${game.priceModifiers.cursed}`}
         </p>
       </footer>
     </div>
